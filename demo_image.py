@@ -15,12 +15,15 @@ frame = cv2.imread(sys.argv[1])
 
 boxes, scores = fd.inference(frame)
 
+
 feed = frame.copy()
 
 for landmarks, pose in fa.get_landmarks(feed, boxes):
     landmarks = landmarks.astype(np.float32)
     mr.render(landmarks.copy(), frame)
 
-cv2.imshow("result", frame)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+cv2.imwrite('./image_out/test_out.jpg', frame)
+
+# cv2.imshow("result", frame)
+# cv2.waitKey(0)
+# cv2.destroyAllWindows()

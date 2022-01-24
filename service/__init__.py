@@ -82,9 +82,11 @@ def draw_poly(frame, landmarks, color=(128, 255, 255), thickness=1):
 
 def sparse(frame, results, color):
     landmarks = np.round(results[0]).astype(np.int)
-    for p in landmarks:
+    for _cnt, p in enumerate(landmarks):
         cv2.circle(frame, tuple(p), 2, color, 0, cv2.LINE_AA)
+        # cv2.putText(frame, str(_cnt), tuple(p), cv2.FONT_HERSHEY_DUPLEX, 0.2, color)
     draw_poly(frame, landmarks, color=color)
+    return landmarks
 
 
 def dense(frame, results, color):
@@ -106,6 +108,7 @@ def pose(frame, results, color):
 
     # decompose matrix to ruler angle
     euler = rotationMatrixToEulerAngles(R)
-    print(f"Pitch: {euler[0]}; Yaw: {euler[1]}; Roll: {euler[2]};")
+    # print(f"Pitch: {euler[0]}; Yaw: {euler[1]}; Roll: {euler[2]};")
 
     draw_projection(frame, R, landmarks, color)
+    return euler

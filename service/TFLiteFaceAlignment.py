@@ -57,6 +57,7 @@ class BaseTFLiteFaceAlignment():
         M = np.array([[scale, 0, cx], [0, scale, cy]])
 
         cropped = cv2.warpAffine(img, M, self._input_shape, borderValue=0.0)
+        cv2.imwrite('./cropped.jpg', cropped)
         rgb = cropped[:, :, ::-1].astype(np.float32)
 
         cv2.normalize(rgb, rgb, alpha=-1, beta=1, norm_type=cv2.NORM_MINMAX)
@@ -98,8 +99,8 @@ class BaseTFLiteFaceAlignment():
         """
 
         for box in detected_faces:
-            if box[2] - box[0] < 100:
-                continue
+            # if box[2] - box[0] < 100:
+            #     continue
             inp, M = self._preprocessing(image, box)
             self._inference(inp)
 
